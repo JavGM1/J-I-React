@@ -1,0 +1,14 @@
+/* Estilos opcionales del proyecto. Puedes añadir ajustes globales aquí. */
+
+/* Asegura que el body no centre todo verticalmente para que el Navbar quede arriba */
+body {
+  display: block;
+  min-height: 100vh;
+  /* Compensa la altura del navbar fijo (aprox. 56px en Bootstrap) */
+  padding-top: 56px;
+}
+
+/* Opcional: separa el contenido del Navbar */
+main {
+  padding: 1rem;
+}
