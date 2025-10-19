@@ -4,11 +4,17 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Modal from "react-bootstrap/Modal";
+import Dropdown from "react-bootstrap/Dropdown";
 import SearchBar from "./SearchBar";
 import { Facebook, Instagram } from "react-bootstrap-icons";
+import Form from "react-bootstrap/esm/Form";
+import { Button } from "react-bootstrap";
+import { Person, Cart } from "react-bootstrap-icons";
 
 export default function AppNavbar() {
   const [showContact, setShowContact] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
@@ -36,12 +42,107 @@ export default function AppNavbar() {
           <div className="d-lg-none my-2">
             <SearchBar onSearch={(q) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} className="w-100" />
           </div>
+          {/* Botones móvil: login y carrito */}
+          <div className="d-lg-none d-flex justify-content-end gap-2 my-2">
+            <Dropdown>
+              <Dropdown.Toggle variant="primary" id="loginDropdownMobile" className="btn-person">
+                <Person size={22} className="icon-person" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu align="end">
+                <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }}>
+                  Iniciar sesión
+                </Dropdown.Item>
+                <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>
+                  Registrar
+                </Dropdown.Item>
+                <Dropdown.Item href="#">
+                  Mi cuenta
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Button variant="outline-secondary" className="btn-cart">
+              <Cart size={22} className="icon-cart" />
+            </Button>
+          </div>
           {/* Buscador en escritorio fuera del collapse */}
         </Navbar.Collapse>
-        <div className="search-wrapper d-none d-lg-flex align-items-center">
-          <SearchBar onSearch={(q) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
+        <div className="d-none d-lg-flex align-items-center ms-auto">
+          <div className="search-wrapper me-2">
+            <SearchBar onSearch={(q) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
+          </div>
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="loginDropdown" className="btn-person">
+              <Person size={22} className="icon-person" />
+            </Dropdown.Toggle>
+            <Dropdown.Menu align="end">
+              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }}>
+                Iniciar sesión
+              </Dropdown.Item>
+              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>
+                Registrar
+              </Dropdown.Item>
+              <Dropdown.Item href="#">
+                Mi cuenta
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Button variant="outline-secondary" className="ms-2 btn-cart">
+            <Cart size={22} className="icon-cart" />
+          </Button>
         </div>
       </Container>
+      
+
+      {/* Login modal */}
+      <Modal show={showLogin} onHide={() => setShowLogin(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="loginEmail">
+        <Form.Label>Dirección de correo electrónico</Form.Label>
+        <Form.Control type="email" placeholder="Ingresa tu email" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="loginPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" placeholder="Contraseña" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="loginRemember">
+              <Form.Check type="checkbox" label="Recuérdame" />
+            </Form.Group>
+            <Button variant="primary" type="submit">Enviar</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      {/* Register modal */}
+      <Modal show={showRegister} onHide={() => setShowRegister(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Registrar</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form id="form-registro">
+            <Form.Group className="mb-3" controlId="registerEmail">
+              <Form.Label>Dirección de correo electrónico</Form.Label>
+              <Form.Control type="email" placeholder="Ingresa tu email" />
+              <Form.Text id="registerEmailHelp" muted>
+                Nunca compartiremos tu email con nadie más.
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="registerPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" placeholder="Contraseña" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="registerOver18">
+              <Form.Check type="checkbox" label="Confirmo que soy mayor de 18 años" required />
+            </Form.Group>
+            <Button variant="primary" type="submit">Enviar</Button>
+            <div id="registro-error" className="text-danger mt-2"></div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
       {/* Contact modal */}
       <Modal show={showContact} onHide={() => setShowContact(false)} centered>
         <Modal.Header closeButton>

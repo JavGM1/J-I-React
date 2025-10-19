@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Carrusel from './components/Carrusel'
 import AppNavbar from './components/Navbar'
 import ProductCard from './components/ProductCard'
+import Footer from './components/Footer'
 import { db, type Product } from './data/db'
 import { useProductSearch } from './hooks/useProductSearch'
 import './App.css'
@@ -41,6 +42,7 @@ function App() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   )
 }
