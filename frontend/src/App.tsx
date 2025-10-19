@@ -1,37 +1,46 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import Carrusel from './components/Carrusel'
-import './App.css'
 import AppNavbar from './components/Navbar'
+import ProductCard from './components/ProductCard'
+import { db, type Product } from './data/db'
+import { useProductSearch } from './hooks/useProductSearch'
+import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cart, setCart] = useState<Product[]>([])
+  const { filtered } = useProductSearch(db)
+
+  function addToCart(product: Product) {
+    // Lógica simple por ahora; puedes implementar useCart hook después
+    const itemExists = cart.findIndex(item => item.id === product.id)
+    if (itemExists >= 0) {
+      const updatedCart = [...cart]
+      updatedCart[itemExists] = { ...updatedCart[itemExists] }
+      setCart(updatedCart)
+    } else {
+      setCart([...cart, product])
+    }
+    console.log('Producto agregado:', product.name)
+  }
 
   return (
     <>
-      {/* Navbar en la parte superior */}
       <AppNavbar />
-        <Carrusel />
-      <div>
-        <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo" alt="React logo" />
-        </a>
-        <a href="https://media1.tenor.com/m/1iSARWJr-TEAAAAC/among-us-twerk.gif" target="_blank" rel="noopener noreferrer">
-          <img src="https://media1.tenor.com/m/1iSARWJr-TEAAAAC/among-us-twerk.gif" className="logo react" alt="React logo" />
-        </a>
+      <Carrusel />
+      
+      {/* Grid de productos */}
+      <div className="container my-5">
+        <h2 className="mb-4 text-center">En tendencia</h2>
+        <div className="row row-cols-1 row-cols-md-4 g-4">
+          {filtered.map(product => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              addToCart={addToCart} 
+            />
+          ))}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

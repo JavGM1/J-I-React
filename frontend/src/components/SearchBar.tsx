@@ -17,6 +17,12 @@ export default function SearchBar({ onSearch, placeholder = "Introduce un térmi
     if (onSearch) onSearch(query);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    if (onSearch) onSearch(newQuery);
+  };
+
   return (
     <Form className={`d-flex ${className}`} role="search" onSubmit={handleSubmit}>
       <Form.Control
@@ -25,7 +31,7 @@ export default function SearchBar({ onSearch, placeholder = "Introduce un térmi
         className="search-input me-2"
         aria-label="Buscar"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
       />
       <Button type="submit" variant="outline-success" className="search-button" aria-label="Buscar">
         <Search aria-hidden="true" />

@@ -1,8 +1,20 @@
+.modal-img-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f8f8f8;
+}
 /* -------------------------------
    Global
    ------------------------------- */
-
 html, body { height: 100%; }
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -13,22 +25,54 @@ body {
 main { padding: 1rem; }
 
 /* -------------------------------
-   Navbar: layout & alignment
+   Navbar
    ------------------------------- */
+.navbar { 
+  min-height: 80px; 
+  z-index: 2000;
+}
+
+.navbar.bg-body-tertiary { 
+  background-color: #d8c7b6 !important; 
+}
+
+.navbar .container { 
+  max-width: 100% !important; 
+  padding-left: 1rem; 
+  padding-right: 1rem; 
+}
+
 .navbar .container,
-.navbar .navbar-collapse { justify-content: flex-start !important; }
-.navbar .container { max-width: 100% !important; padding-left: 1rem; padding-right: 1rem; }
-.navbar { min-height: 80px; z-index: 2000; }
-.navbar .navbar-nav { justify-content: flex-start !important; text-align: left; }
-.navbar .nav-link, .navbar .dropdown-item, .navbar .dropdown-menu { text-align: left; }
-.navbar .nav-link { display: flex; align-items: center; }
-.navbar .navbar-brand { margin-right: 1rem; padding-left: 2rem; }
-.navbar.bg-body-tertiary { background-color: #d8c7b6 !important; }
+.navbar .navbar-collapse { 
+  justify-content: flex-start !important; 
+}
+
+.navbar .navbar-nav { 
+  justify-content: flex-start !important; 
+  margin-left: 0 !important;
+  text-align: left; 
+}
+
+.navbar .nav-link, 
+.navbar .dropdown-item, 
+.navbar .dropdown-menu { 
+  text-align: left; 
+}
+
+.navbar .nav-link { 
+  display: flex; 
+  align-items: center;
+  position: relative;
+  z-index: 2200; /* ensure nav links are above search input */
+}
+
+.navbar .navbar-brand { 
+  margin-right: 1rem; 
+  padding-left: 2rem; 
+}
 
 /* -------------------------------
-   SearchBar component styles
-   - Input
-   - Button
+   SearchBar
    ------------------------------- */
 .search-input {
   min-width: 180px;
@@ -41,41 +85,27 @@ main { padding: 1rem; }
   padding: 0.35rem 0.9rem;
 }
 
-/* -------------------------------
-   Button variants (visual tweaks)
-   Applied when using Bootstrap variant classes
-   ------------------------------- */
 .search-button.btn-outline-success {
   color: #ffffff;
   border-color: #c6b29a;
   background-color: #c6b29a;
 }
+
 .search-button.btn-outline-success:hover {
   color: #000;
   background-color: #e7d0c5;
   border-color: #e7d0c5;
 }
 
-/* -------------------------------
-   Layout: centrar SearchBar en desktop
-   - El contenedor usado en Navbar tiene clases Bootstrap `d-none d-lg-flex`
-   - Aplicamos centrado para pantallas >= lg (992px)
-   ------------------------------- */
+/* Desktop: centrar SearchBar */
 @media (min-width: 992px) {
-  /* Centrar el área donde se coloca el SearchBar en escritorio */
   .d-none.d-lg-flex.align-items-center {
     justify-content: center;
     width: 100%;
-    /* Ajuste fino: desplazar la zona de búsqueda (input + botón) a la izquierda */
-   /* Ajuste fino: desplazar la zona de búsqueda (input + botón) a la izquierda
-     Evitamos `transform` porque crea un nuevo stacking context y puede provocar
-     que el input cubra enlaces. Usamos margin-left negativo en su lugar. */
-   margin-left: -200px;
+    margin-left: -200px;
   }
 
-  /* Asegurar que el input no crezca demasiado cuando está centrado */
   .d-none.d-lg-flex .search-input {
-    /* Tamaño responsivo: mínimo 280px, ideal 35vw, máximo 640px */
     width: clamp(280px, 35vw, 640px);
     min-width: 280px;
     max-width: 640px;
@@ -84,98 +114,56 @@ main { padding: 1rem; }
     box-sizing: border-box;
   }
 
-  /* Move only the input and button slightly left on desktop */
-  /* Avoid using transforms which create stacking contexts and can cause
-     the search input to sit above navbar links. Use normal flow and small
-     margins instead so links remain clickable. */
+  .d-none.d-lg-flex .search-button {
+    padding: 0.45rem 1rem;
+    font-size: 0.95rem;
+  }
+
   .search-input,
   .search-button {
     transform: none !important;
     transition: none !important;
     position: relative;
-    z-index: 100; /* keep search below navbar links */
+    z-index: 100;
     margin-left: 0;
   }
 }
 
-/* Responsive tweaks: botón proporcional en desktop y comportamiento móvil */
-.d-none.d-lg-flex .search-button {
-  padding: 0.45rem 1rem;
-  font-size: 0.95rem;
-}
-
+/* Mobile: SearchBar ocupa 100% */
 @media (max-width: 991px) {
-  /* En móvil: que el buscador dentro del collapse ocupe el 100% */
   .d-lg-none .search-input {
     width: 100%;
   }
   .d-lg-none .search-button {
     width: 100%;
-    margin-top: 0.5rem; /* opcional: botón debajo del input */
+    margin-top: 0.5rem;
   }
 }
 
-/* Carousel placeholder used by UncontrolledExample component */
-.carousel-placeholder {
-  height: 420px;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-}
-
-/* Placeholder used by Carrusel component */
-.carousel-placeholder {
-  height: 420px;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Exact requested carousel styles */
-.imgCarousel {
-  width: 100%;
-  max-width: 1000px;
-  height: auto;
-  aspect-ratio: 16/7; /* mantiene proporción similar a 400px en pantallas grandes */
-  margin: 24px auto;
-  display: block;
-  object-fit: cover;
-  border-radius: 18px;
-}
-
+/* -------------------------------
+   Carousel
+   ------------------------------- */
 .custom-carousel {
   position: relative;
   width: 100%;
   max-width: 1000px;
-  /* Desktop: responsive margin (not too close, not too far). Mobile override below. */
   margin: clamp(18px, 2.4vh, 36px) auto;
-}
-
-/* Mobile: reduce gap to 2px so carousel appears close to navbar on small screens */
-@media (max-width: 991px) {
-  .custom-carousel {
-    margin: 2px auto;
-  }
-}
-
-/* Ensure the carousel keeps a consistent visible area even if an image has different intrinsic size */
-.custom-carousel {
-  aspect-ratio: 16/7; /* preferred */
+  margin-top: 2vw !important;
+  margin-bottom: 2rem !important;
+  aspect-ratio: 16/7;
   overflow: hidden;
-}
-
-/* Apply the rounded corners to the container so both top and bottom are clipped */
-.custom-carousel {
   border-radius: 18px;
 }
 
-/* Fallback fixed height on large screens to avoid layout jumps (if aspect-ratio not supported) */
 @media (min-width: 768px) {
   .custom-carousel {
     height: 420px;
+  }
+}
+
+@media (max-width: 991px) {
+  .custom-carousel {
+    margin: 2px auto;
   }
 }
 
@@ -189,8 +177,13 @@ main { padding: 1rem; }
   height: 100%;
   object-fit: cover;
   display: block;
-  margin: 0; /* ensure no extra space that could reveal non-rounded background */
-  border-radius: 0; /* container handles rounding */
+  margin: 0;
+  border-radius: 0;
+}
+
+.custom-carousel .imgCarousel {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .custom-carousel .carousel-control-prev {
@@ -201,49 +194,41 @@ main { padding: 1rem; }
   right: 0;
 }
 
-.custom-carousel {
-  /* Strong override: force the carousel to be right below the navbar */
-  margin-top: 2px !important;
+/* -------------------------------
+   Product Cards
+   ------------------------------- */
+.mueble-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.custom-carousel .imgCarousel {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+.mueble-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-.navbar .navbar-nav {
-  justify-content: flex-start !important;
-  margin-left: 0 !important;
-  text-align: left;
+.mueble-card .btn-outline-primary {
+  color: #CBB79A;
+  border-color: #CBB79A;
 }
 
-.navbar .nav-link,
-.navbar .dropdown-item,
-.navbar .dropdown-menu {
-  text-align: left;
-}
-/* Asegurar que enlaces estén verticalmente centrados */
-.navbar .nav-link {
-  display: flex;
-  align-items: center;
-    position: relative;
-    z-index: 2200; /* ensure nav links are above search input */
+.mueble-card .btn-outline-primary:hover,
+.mueble-card .btn-outline-primary:focus {
+  background-color: #CBB79A;
+  border-color: #CBB79A;
+  color: #fff;
 }
 
-.navbar .navbar-brand {
-  margin-right: 1rem;
+.mueble-img {
+  width: 100%;
+  height: auto;
 }
 
-.navbar.bg-body-tertiary {
-    background-color: #d8c7b6 !important;
+.precio-mueble {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #0d6efd;
+  margin-bottom: 1rem;
 }
-
-.navbar .navbar-brand {
-    padding-left: 2rem;
-}
-
-
 
 
 
