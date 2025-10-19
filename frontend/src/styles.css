@@ -1,14 +1,377 @@
-/* Estilos opcionales del proyecto. Puedes añadir ajustes globales aquí. */
+/* -------------------------------
+   Global
+   ------------------------------- */
 
 /* Asegura que el body no centre todo verticalmente para que el Navbar quede arriba */
 body {
-  display: block;
-  min-height: 100vh;
-  /* Compensa la altura del navbar fijo (aprox. 56px en Bootstrap) */
-  padding-top: 56px;
+  /* -------------------------------
+     Global
+     ------------------------------- */
+  /* Asegura que el body no centre todo verticalmente para que el Navbar quede arriba */
+  body {
+    display: block;
+    min-height: 100vh;
+    /* Compensa la altura del navbar fijo (ahora 80px) */
+    padding-top: 80px;
+  }
+
+  /* Opcional: separa el contenido del Navbar */
+  main {
+    padding: 1rem;
+  }
+
+
+  /* -------------------------------
+     Navbar
+     - Layout & alignment
+     - Container sizing
+     - Nav links & brand
+     - Background
+     ------------------------------- */
+  .navbar .container,
+  .navbar .navbar-collapse {
+    justify-content: flex-start !important;
+  }
+
+  .navbar .container {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .navbar .navbar-collapse {
+    align-items: center;
+  }
+
+  /* Tamaño del navbar */
+  .navbar {
+    min-height: 80px;
+    /* Asegurar que el navbar fijo esté por encima de otros elementos y sea clickable */
+    z-index: 2000;
+  }
+
+  .navbar .navbar-nav {
+    justify-content: flex-start !important;
+    margin-left: 0 !important;
+    text-align: left;
+  }
+
+  .navbar .nav-link,
+  .navbar .dropdown-item,
+  .navbar .dropdown-menu {
+    text-align: left;
+  }
+
+  .navbar .navbar-brand {
+    margin-right: 1rem;
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar.bg-body-tertiary {
+    background-color: #d8c7b6 !important;
+  }
+
+
+  /* -------------------------------
+     Searchbar
+     - Base styles for input and button
+     ------------------------------- */
+  .search-input {
+    /* base appearance; width controlled in responsive block */
+    min-width: 180px;
+    border-radius: 6px;
+    /* ensure internal spacing behaves predictably */
+    box-sizing: border-box;
+  }
+
+  .search-button {
+    border-radius: 6px;
+    padding: 0.35rem 0.9rem;
+  }
+
+
+  /* -------------------------------
+     Searchbar - Button variants
+     (visual tweaks when using Bootstrap variants)
+     ------------------------------- */
+  .search-button.btn-outline-success {
+    color: #000000;
+    border-color: #c6b29a;
+    background-color: #c6b29a;
+  }
+  .search-button.btn-outline-success:hover {
+    color: #000;
+    background-color: #e7d0c5;
+    border-color: #e7d0c5;
+  }
+
+
+  /* -------------------------------
+     Searchbar - Responsive & positioning
+     - Centering on desktop
+     - Responsive width via clamp()
+     - Mobile behavior
+     ------------------------------- */
+  @media (min-width: 992px) {
+    /* Centrar el área donde se coloca el SearchBar en escritorio */
+    .d-none.d-lg-flex.align-items-center {
+      justify-content: center;
+      width: 100%;
+  /* Mantener centrado (sin desplazar) para evitar solapamientos */
+  transform: translateX(0);
+    }
+
+    /* Tamaño responsivo del input: mínimo 280px, ideal 35vw, máximo 640px */
+    .d-none.d-lg-flex .search-input {
+      width: clamp(280px, 35vw, 640px);
+      min-width: 280px;
+      max-width: 640px;
+      border-radius: 6px;
+      padding: 0.45rem 0.75rem;
+      box-sizing: border-box;
+    }
+
+    /* Botón proporcional en desktop */
+    .d-none.d-lg-flex .search-button {
+      padding: 0.45rem 1rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 991px) {
+    /* En móvil: que el buscador dentro del collapse ocupe el 100% */
+    .d-lg-none .search-input {
+      width: 100%;
+    }
+    .d-lg-none .search-button {
+      width: 100%;
+      margin-top: 0.5rem; /* opcional: botón debajo del input */
+    }
+  }
+
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+ 
+
+/* -------------------------------
+   Navbar: layout & alignment
+   ------------------------------- */
+.navbar .navbar-collapse {
+  align-items: center;
 }
 
-/* Opcional: separa el contenido del Navbar */
-main {
-  padding: 1rem;
+/* -------------------------------
+   SearchBar component styles
+   - Input
+   - Button
+   ------------------------------- */
+.search-input {
+  min-width: 180px;
+  border-radius: 6px;
+  justify-self: center;
 }
+
+.search-button {
+  border-radius: 6px;
+  padding: 0.35rem 0.9rem;
+}
+
+/* -------------------------------
+   Button variants (visual tweaks)
+   Applied when using Bootstrap variant classes
+   ------------------------------- */
+.search-button.btn-outline-success {
+  color: #000000;
+  border-color: #c6b29a;
+  background-color: #c6b29a;
+}
+.search-button.btn-outline-success:hover {
+  color: #000;
+  background-color: #e7d0c5;
+  border-color: #e7d0c5;
+}
+
+/* -------------------------------
+   Layout: centrar SearchBar en desktop
+   - El contenedor usado en Navbar tiene clases Bootstrap `d-none d-lg-flex`
+   - Aplicamos centrado para pantallas >= lg (992px)
+   ------------------------------- */
+@media (min-width: 992px) {
+  /* Centrar el área donde se coloca el SearchBar en escritorio */
+  .d-none.d-lg-flex.align-items-center {
+    justify-content: center;
+    width: 100%;
+    /* Ajuste fino: desplazar la zona de búsqueda (input + botón) a la izquierda */
+  transform: translateX(-0px);
+    /* Ensure the search wrapper itself allows pointer events and doesn't cover other elements */
+    pointer-events: auto;
+  }
+
+  /* Asegurar que el input no crezca demasiado cuando está centrado */
+  .d-none.d-lg-flex .search-input {
+    /* Tamaño responsivo: mínimo 280px, ideal 35vw, máximo 640px */
+    width: clamp(280px, 35vw, 640px);
+    min-width: 280px;
+    max-width: 640px;
+    border-radius: 6px;
+    padding: 0.45rem 0.75rem;
+    box-sizing: border-box;
+  }
+}
+
+/* Responsive tweaks: botón proporcional en desktop y comportamiento móvil */
+.d-none.d-lg-flex .search-button {
+  padding: 0.45rem 1rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 991px) {
+  /* En móvil: que el buscador dentro del collapse ocupe el 100% */
+  .d-lg-none .search-input {
+    width: 100%;
+  }
+  .d-lg-none .search-button {
+    width: 100%;
+    margin-top: 0.5rem; /* opcional: botón debajo del input */
+  }
+}
+
+/* Carousel placeholder used by UncontrolledExample component */
+.carousel-placeholder {
+  height: 420px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+/* Placeholder used by Carrusel component */
+.carousel-placeholder {
+  height: 420px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Exact requested carousel styles */
+.imgCarousel {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  aspect-ratio: 16/7; /* mantiene proporción similar a 400px en pantallas grandes */
+  margin: 24px auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.custom-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 24px auto;
+}
+
+/* Ensure the carousel keeps a consistent visible area even if an image has different intrinsic size */
+.custom-carousel {
+  aspect-ratio: 16/7; /* preferred */
+  overflow: hidden;
+}
+
+/* Apply the rounded corners to the container so both top and bottom are clipped */
+.custom-carousel {
+  border-radius: 18px;
+}
+
+/* Fallback fixed height on large screens to avoid layout jumps (if aspect-ratio not supported) */
+@media (min-width: 768px) {
+  .custom-carousel {
+    height: 420px;
+  }
+}
+
+.custom-carousel .carousel-inner,
+.custom-carousel .carousel-item {
+  height: 100%;
+}
+
+.imgCarousel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0; /* ensure no extra space that could reveal non-rounded background */
+  border-radius: 0; /* container handles rounding */
+}
+
+.custom-carousel .carousel-control-prev {
+  left: 0;
+}
+
+.custom-carousel .carousel-control-next {
+  right: 0;
+}
+
+/* Stronger override for the desktop search wrapper to ensure the left shift applies
+   and to prevent it from occupying the full width (avoids covering nav links). */
+@media (min-width: 992px) {
+  .navbar .container > .d-none.d-lg-flex.align-items-center {
+    justify-content: center;
+    width: auto;           /* do not stretch to full width */
+    max-width: 560px;     /* limit width so it doesn't overlap nav links */
+  transform: translateX(-140px) !important; /* enforce the slight left shift */
+    pointer-events: auto;  /* ensure it and its children accept pointer events */
+  }
+  /* More specific and dedicated rule for our search wrapper */
+  .navbar .container > .search-wrapper.d-none.d-lg-flex.align-items-center {
+    transform: translateX(-140px) !important;
+    max-width: 520px;
+    width: auto;
+  }
+}
+
+
+.navbar .navbar-nav {
+  justify-content: flex-start !important;
+  margin-left: 0 !important;
+  text-align: left;
+}
+
+.navbar .nav-link,
+.navbar .dropdown-item,
+.navbar .dropdown-menu {
+  text-align: left;
+}
+/* Asegurar que enlaces estén verticalmente centrados */
+.navbar .nav-link {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .navbar-brand {
+  margin-right: 1rem;
+}
+
+.navbar.bg-body-tertiary {
+    background-color: #d8c7b6 !important;
+}
+
+.navbar .navbar-brand {
+    padding-left: 2rem;
+}
+
+
+
+
+
+

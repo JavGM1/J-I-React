@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import Carrusel from './components/Carrusel'
 import './App.css'
 import AppNavbar from './components/Navbar'
 
@@ -10,6 +11,7 @@ function App() {
     <>
       {/* Navbar en la parte superior */}
       <AppNavbar />
+        <Carrusel />
       <div>
         <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
           <img src={reactLogo} className="logo" alt="React logo" />
