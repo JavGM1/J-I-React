@@ -38,3 +38,6 @@ dist-ssr/
 
 # Ignore frontend nested node_modules just in case
 frontend/node_modules/
+
+# Ignore build output of frontend
+frontend/dist/
