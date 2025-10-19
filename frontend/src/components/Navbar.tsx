@@ -10,11 +10,59 @@ import { Facebook, Instagram } from "react-bootstrap-icons";
 import Form from "react-bootstrap/esm/Form";
 import { Button } from "react-bootstrap";
 import { Person, Cart } from "react-bootstrap-icons";
+// Todos los imports deben ir al inicio del archivo, antes de cualquier función o lógica.
 
 export default function AppNavbar() {
   const [showContact, setShowContact] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+
+  // Estados para login
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  // Estados para registro
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerOver18, setRegisterOver18] = useState(false);
+  const [registerError, setRegisterError] = useState("");
+
+  function validateEmail(email: string) {
+    return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+  }
+
+  function handleLoginSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validateEmail(loginEmail)) {
+      setLoginError("Email inválido");
+      return;
+    }
+    if (loginPassword.length < 6) {
+      setLoginError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+    setLoginError("");
+    setShowLogin(false);
+  }
+
+  function handleRegisterSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validateEmail(registerEmail)) {
+      setRegisterError("Email inválido");
+      return;
+    }
+    if (registerPassword.length < 6) {
+      setRegisterError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+    if (!registerOver18) {
+      setRegisterError("Debes confirmar que eres mayor de 18 años");
+      return;
+    }
+    setRegisterError("");
+    setShowRegister(false);
+  }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
@@ -99,14 +147,32 @@ export default function AppNavbar() {
           <Modal.Title>Iniciar sesión</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleLoginSubmit}>
             <Form.Group className="mb-3" controlId="loginEmail">
-        <Form.Label>Dirección de correo electrónico</Form.Label>
-        <Form.Control type="email" placeholder="Ingresa tu email" />
+              <Form.Label>Dirección de correo electrónico</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Ingresa tu email"
+                value={loginEmail}
+                onChange={e => setLoginEmail(e.target.value)}
+                isInvalid={!!loginError && loginError.includes("Email")}
+              />
+              <Form.Control.Feedback type="invalid">
+                {loginError && loginError.includes("Email") ? loginError : null}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="loginPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" placeholder="Contraseña" />
+              <Form.Control
+                type="password"
+                placeholder="Contraseña"
+                value={loginPassword}
+                onChange={e => setLoginPassword(e.target.value)}
+                isInvalid={!!loginError && loginError.includes("contraseña")}
+              />
+              <Form.Control.Feedback type="invalid">
+                {loginError && loginError.includes("contraseña") ? loginError : null}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="loginRemember">
               <Form.Check type="checkbox" label="Recuérdame" />
@@ -122,23 +188,49 @@ export default function AppNavbar() {
           <Modal.Title>Registrar</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form id="form-registro">
+          <Form onSubmit={handleRegisterSubmit}>
             <Form.Group className="mb-3" controlId="registerEmail">
               <Form.Label>Dirección de correo electrónico</Form.Label>
-              <Form.Control type="email" placeholder="Ingresa tu email" />
+              <Form.Control
+                type="email"
+                placeholder="Ingresa tu email"
+                value={registerEmail}
+                onChange={e => setRegisterEmail(e.target.value)}
+                isInvalid={!!registerError && registerError.includes("Email")}
+              />
               <Form.Text id="registerEmailHelp" muted>
                 Nunca compartiremos tu email con nadie más.
               </Form.Text>
+              <Form.Control.Feedback type="invalid">
+                {registerError && registerError.includes("Email") ? registerError : null}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="registerPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" placeholder="Contraseña" />
+              <Form.Control
+                type="password"
+                placeholder="Contraseña"
+                value={registerPassword}
+                onChange={e => setRegisterPassword(e.target.value)}
+                isInvalid={!!registerError && registerError.includes("contraseña")}
+              />
+              <Form.Control.Feedback type="invalid">
+                {registerError && registerError.includes("contraseña") ? registerError : null}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="registerOver18">
-              <Form.Check type="checkbox" label="Confirmo que soy mayor de 18 años" required />
+              <Form.Check
+                type="checkbox"
+                label="Confirmo que soy mayor de 18 años"
+                checked={registerOver18}
+                onChange={e => setRegisterOver18(e.target.checked)}
+                isInvalid={!!registerError && registerError.includes("mayor de 18")}
+              />
+              {registerError && registerError.includes("mayor de 18") && (
+                <div className="text-danger mt-1">{registerError}</div>
+              )}
             </Form.Group>
             <Button variant="primary" type="submit">Enviar</Button>
-            <div id="registro-error" className="text-danger mt-2"></div>
           </Form>
         </Modal.Body>
       </Modal>
