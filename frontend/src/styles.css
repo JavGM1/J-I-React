@@ -2,171 +2,28 @@
    Global
    ------------------------------- */
 
-/* Asegura que el body no centre todo verticalmente para que el Navbar quede arriba */
+html, body { height: 100%; }
 body {
-  /* -------------------------------
-     Global
-     ------------------------------- */
-  /* Asegura que el body no centre todo verticalmente para que el Navbar quede arriba */
-  body {
-    display: block;
-    min-height: 100vh;
-    /* Compensa la altura del navbar fijo (ahora 80px) */
-    padding-top: 80px;
-  }
-
-  /* Opcional: separa el contenido del Navbar */
-  main {
-    padding: 1rem;
-  }
-
-
-  /* -------------------------------
-     Navbar
-     - Layout & alignment
-     - Container sizing
-     - Nav links & brand
-     - Background
-     ------------------------------- */
-  .navbar .container,
-  .navbar .navbar-collapse {
-    justify-content: flex-start !important;
-  }
-
-  .navbar .container {
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .navbar .navbar-collapse {
-    align-items: center;
-  }
-
-  /* Tamaño del navbar */
-  .navbar {
-    min-height: 80px;
-    /* Asegurar que el navbar fijo esté por encima de otros elementos y sea clickable */
-    z-index: 2000;
-  }
-
-  .navbar .navbar-nav {
-    justify-content: flex-start !important;
-    margin-left: 0 !important;
-    text-align: left;
-  }
-
-  .navbar .nav-link,
-  .navbar .dropdown-item,
-  .navbar .dropdown-menu {
-    text-align: left;
-  }
-
-  .navbar .navbar-brand {
-    margin-right: 1rem;
-    padding-left: 2rem;
-    display: flex;
-    align-items: center;
-  }
-
-  .navbar.bg-body-tertiary {
-    background-color: #d8c7b6 !important;
-  }
-
-
-  /* -------------------------------
-     Searchbar
-     - Base styles for input and button
-     ------------------------------- */
-  .search-input {
-    /* base appearance; width controlled in responsive block */
-    min-width: 180px;
-    border-radius: 6px;
-    /* ensure internal spacing behaves predictably */
-    box-sizing: border-box;
-  }
-
-  .search-button {
-    border-radius: 6px;
-    padding: 0.35rem 0.9rem;
-  }
-
-
-  /* -------------------------------
-     Searchbar - Button variants
-     (visual tweaks when using Bootstrap variants)
-     ------------------------------- */
-  .search-button.btn-outline-success {
-    color: #000000;
-    border-color: #c6b29a;
-    background-color: #c6b29a;
-  }
-  .search-button.btn-outline-success:hover {
-    color: #000;
-    background-color: #e7d0c5;
-    border-color: #e7d0c5;
-  }
-
-
-  /* -------------------------------
-     Searchbar - Responsive & positioning
-     - Centering on desktop
-     - Responsive width via clamp()
-     - Mobile behavior
-     ------------------------------- */
-  @media (min-width: 992px) {
-    /* Centrar el área donde se coloca el SearchBar en escritorio */
-    .d-none.d-lg-flex.align-items-center {
-      justify-content: center;
-      width: 100%;
-  /* Mantener centrado (sin desplazar) para evitar solapamientos */
-  transform: translateX(0);
-    }
-
-    /* Tamaño responsivo del input: mínimo 280px, ideal 35vw, máximo 640px */
-    .d-none.d-lg-flex .search-input {
-      width: clamp(280px, 35vw, 640px);
-      min-width: 280px;
-      max-width: 640px;
-      border-radius: 6px;
-      padding: 0.45rem 0.75rem;
-      box-sizing: border-box;
-    }
-
-    /* Botón proporcional en desktop */
-    .d-none.d-lg-flex .search-button {
-      padding: 0.45rem 1rem;
-      font-size: 0.95rem;
-    }
-  }
-
-  @media (max-width: 991px) {
-    /* En móvil: que el buscador dentro del collapse ocupe el 100% */
-    .d-lg-none .search-input {
-      width: 100%;
-    }
-    .d-lg-none .search-button {
-      width: 100%;
-      margin-top: 0.5rem; /* opcional: botón debajo del input */
-    }
-  }
-
-  max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin: 0;
+  min-height: 100vh;
+  padding-top: 80px; /* compensate fixed navbar */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
- 
+
+main { padding: 1rem; }
 
 /* -------------------------------
    Navbar: layout & alignment
    ------------------------------- */
-.navbar .navbar-collapse {
-  align-items: center;
-}
+.navbar .container,
+.navbar .navbar-collapse { justify-content: flex-start !important; }
+.navbar .container { max-width: 100% !important; padding-left: 1rem; padding-right: 1rem; }
+.navbar { min-height: 80px; z-index: 2000; }
+.navbar .navbar-nav { justify-content: flex-start !important; text-align: left; }
+.navbar .nav-link, .navbar .dropdown-item, .navbar .dropdown-menu { text-align: left; }
+.navbar .nav-link { display: flex; align-items: center; }
+.navbar .navbar-brand { margin-right: 1rem; padding-left: 2rem; }
+.navbar.bg-body-tertiary { background-color: #d8c7b6 !important; }
 
 /* -------------------------------
    SearchBar component styles
@@ -189,7 +46,7 @@ body {
    Applied when using Bootstrap variant classes
    ------------------------------- */
 .search-button.btn-outline-success {
-  color: #000000;
+  color: #ffffff;
   border-color: #c6b29a;
   background-color: #c6b29a;
 }
@@ -210,9 +67,10 @@ body {
     justify-content: center;
     width: 100%;
     /* Ajuste fino: desplazar la zona de búsqueda (input + botón) a la izquierda */
-  transform: translateX(-0px);
-    /* Ensure the search wrapper itself allows pointer events and doesn't cover other elements */
-    pointer-events: auto;
+   /* Ajuste fino: desplazar la zona de búsqueda (input + botón) a la izquierda
+     Evitamos `transform` porque crea un nuevo stacking context y puede provocar
+     que el input cubra enlaces. Usamos margin-left negativo en su lugar. */
+   margin-left: -200px;
   }
 
   /* Asegurar que el input no crezca demasiado cuando está centrado */
@@ -224,6 +82,19 @@ body {
     border-radius: 6px;
     padding: 0.45rem 0.75rem;
     box-sizing: border-box;
+  }
+
+  /* Move only the input and button slightly left on desktop */
+  /* Avoid using transforms which create stacking contexts and can cause
+     the search input to sit above navbar links. Use normal flow and small
+     margins instead so links remain clickable. */
+  .search-input,
+  .search-button {
+    transform: none !important;
+    transition: none !important;
+    position: relative;
+    z-index: 100; /* keep search below navbar links */
+    margin-left: 0;
   }
 }
 
@@ -279,7 +150,15 @@ body {
   position: relative;
   width: 100%;
   max-width: 1000px;
-  margin: 24px auto;
+  /* Desktop: responsive margin (not too close, not too far). Mobile override below. */
+  margin: clamp(18px, 2.4vh, 36px) auto;
+}
+
+/* Mobile: reduce gap to 2px so carousel appears close to navbar on small screens */
+@media (max-width: 991px) {
+  .custom-carousel {
+    margin: 2px auto;
+  }
 }
 
 /* Ensure the carousel keeps a consistent visible area even if an image has different intrinsic size */
@@ -322,22 +201,14 @@ body {
   right: 0;
 }
 
-/* Stronger override for the desktop search wrapper to ensure the left shift applies
-   and to prevent it from occupying the full width (avoids covering nav links). */
-@media (min-width: 992px) {
-  .navbar .container > .d-none.d-lg-flex.align-items-center {
-    justify-content: center;
-    width: auto;           /* do not stretch to full width */
-    max-width: 560px;     /* limit width so it doesn't overlap nav links */
-  transform: translateX(-140px) !important; /* enforce the slight left shift */
-    pointer-events: auto;  /* ensure it and its children accept pointer events */
-  }
-  /* More specific and dedicated rule for our search wrapper */
-  .navbar .container > .search-wrapper.d-none.d-lg-flex.align-items-center {
-    transform: translateX(-140px) !important;
-    max-width: 520px;
-    width: auto;
-  }
+.custom-carousel {
+  /* Strong override: force the carousel to be right below the navbar */
+  margin-top: 2px !important;
+}
+
+.custom-carousel .imgCarousel {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 
@@ -356,6 +227,8 @@ body {
 .navbar .nav-link {
   display: flex;
   align-items: center;
+    position: relative;
+    z-index: 2200; /* ensure nav links are above search input */
 }
 
 .navbar .navbar-brand {

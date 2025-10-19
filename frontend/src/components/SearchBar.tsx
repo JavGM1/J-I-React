@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Search } from 'react-bootstrap-icons';
 
 interface SearchBarProps {
   onSearch?: (query: string) => void;
@@ -26,8 +27,9 @@ export default function SearchBar({ onSearch, placeholder = "Introduce un térmi
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <Button type="submit" variant="outline-success" className="search-button">
-        Buscar
+      <Button type="submit" variant="outline-success" className="search-button" aria-label="Buscar">
+        <Search aria-hidden="true" />
+        <span className="visually-hidden">Buscar</span>
       </Button>
     </Form>
   );
