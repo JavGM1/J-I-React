@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -7,15 +8,28 @@ import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import SearchBar from "./SearchBar";
 import { Facebook, Instagram } from "react-bootstrap-icons";
-import Form from "react-bootstrap/esm/Form";
+import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { Person, Cart } from "react-bootstrap-icons";
-// Todos los imports deben ir al inicio del archivo, antes de cualquier función o lógica.
+import type { CartItem } from "../hooks/useCart";
 
-export default function AppNavbar() {
+type NavbarProps = {
+  setCategory?: (cat: string) => void;
+  // Carrito
+  itemCount?: number;
+  cart?: CartItem[];
+  increaseQuantity?: (id: number) => void;
+  decreaseQuantity?: (id: number) => void;
+  removeFromCart?: (id: number) => void;
+  clearCart?: () => void;
+  cartTotal?: number;
+};
+
+export default function AppNavbar({ setCategory, itemCount = 0, cart = [], increaseQuantity, decreaseQuantity, removeFromCart, clearCart, cartTotal = 0 }: NavbarProps) {
   const [showContact, setShowContact] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
   // Estados para login
   const [loginEmail, setLoginEmail] = useState("");
@@ -64,6 +78,8 @@ export default function AppNavbar() {
     setShowRegister(false);
   }
 
+  const clp = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
       <Container fluid>
@@ -74,11 +90,17 @@ export default function AppNavbar() {
             <Nav.Link href="#home">Inicio</Nav.Link>
             <Nav.Link href="#catalogo">Catálogo</Nav.Link>
             <NavDropdown title="Muebles" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Living</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Oficina</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Baño</NavDropdown.Item>
+              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('living'); }}>
+                Living
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('oficina'); }}>
+                Oficina
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('baño'); }}>
+                Baño
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('todos'); }}>
                 Catálogo completo
               </NavDropdown.Item>
             </NavDropdown>
@@ -88,7 +110,7 @@ export default function AppNavbar() {
           </Nav>
           {/* Buscador móvil dentro del collapse */}
           <div className="d-lg-none my-2">
-            <SearchBar onSearch={(q) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} className="w-100" />
+            <SearchBar onSearch={(q: string) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} className="w-100" />
           </div>
           {/* Botones móvil: login y carrito */}
           <div className="d-lg-none d-flex justify-content-end gap-2 my-2">
@@ -108,15 +130,21 @@ export default function AppNavbar() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Button variant="outline-secondary" className="btn-cart">
+            <Button variant="outline-secondary" className="btn-cart position-relative" onClick={() => setShowCart(true)}>
               <Cart size={22} className="icon-cart" />
+              {itemCount > 0 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {itemCount}
+                  <span className="visually-hidden">items en carrito</span>
+                </span>
+              )}
             </Button>
           </div>
           {/* Buscador en escritorio fuera del collapse */}
         </Navbar.Collapse>
         <div className="d-none d-lg-flex align-items-center ms-auto">
           <div className="search-wrapper me-2">
-            <SearchBar onSearch={(q) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
+            <SearchBar onSearch={(q: string) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
           </div>
           <Dropdown>
             <Dropdown.Toggle variant="primary" id="loginDropdown" className="btn-person">
@@ -134,8 +162,14 @@ export default function AppNavbar() {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Button variant="outline-secondary" className="ms-2 btn-cart">
+          <Button variant="outline-secondary" className="ms-2 btn-cart position-relative" onClick={() => setShowCart(true)}>
             <Cart size={22} className="icon-cart" />
+            {itemCount > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {itemCount}
+                <span className="visually-hidden">items en carrito</span>
+              </span>
+            )}
           </Button>
         </div>
       </Container>
@@ -268,6 +302,65 @@ export default function AppNavbar() {
             </div>
           </div>
         </Modal.Body>
+      </Modal>
+
+      {/* Cart modal */}
+      <Modal show={showCart} onHide={() => setShowCart(false)} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Mi carrito</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {cart.length === 0 ? (
+            <p className="text-center mb-0">Tu carrito está vacío.</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table align-middle">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th className="text-center">Cantidad</th>
+                    <th className="text-end">Precio</th>
+                    <th className="text-end">Total</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.map((it) => (
+                    <tr key={it.id}>
+                      <td>{it.name}</td>
+                      <td className="text-center">
+                        <div className="btn-group" role="group">
+                          <Button variant="outline-secondary" size="sm" onClick={() => decreaseQuantity && decreaseQuantity(it.id)}>-</Button>
+                          <span className="px-3">{it.quantity}</span>
+                          <Button variant="outline-secondary" size="sm" onClick={() => increaseQuantity && increaseQuantity(it.id)}>+</Button>
+                        </div>
+                      </td>
+                      <td className="text-end">{clp.format(it.price)}</td>
+                      <td className="text-end">{clp.format(it.price * it.quantity)}</td>
+                      <td className="text-end">
+                        <Button variant="outline-danger" size="sm" onClick={() => removeFromCart && removeFromCart(it.id)}>Eliminar</Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3} className="text-end fw-bold">Total</td>
+                    <td className="text-end fw-bold">{clp.format(cartTotal)}</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          {cart.length > 0 && (
+            <Button variant="outline-danger" onClick={() => clearCart && clearCart()}>Vaciar carrito</Button>
+          )}
+          <Button variant="secondary" onClick={() => setShowCart(false)}>Cerrar</Button>
+          <Button variant="primary" disabled={cart.length === 0}>Ir a pagar</Button>
+        </Modal.Footer>
       </Modal>
     </Navbar>
   );

@@ -3,37 +3,40 @@ import Carrusel from './components/Carrusel'
 import AppNavbar from './components/Navbar'
 import ProductCard from './components/ProductCard'
 import Footer from './components/Footer'
-import { db, type Product } from './data/db'
+import { db } from './data/db'
 import { useProductSearch } from './hooks/useProductSearch'
+import { useCart } from './hooks/useCart'
 import './App.css'
 
 function App() {
-  const [cart, setCart] = useState<Product[]>([])
+  const [category, setCategory] = useState<string>('todos')
   const { filtered } = useProductSearch(db)
+  const { addToCart, cart, itemCount, increaseQuantity, decreaseQuantity, removeFromCart, clearCart, cartTotal } = useCart()
 
-  function addToCart(product: Product) {
-    // Lógica simple por ahora; puedes implementar useCart hook después
-    const itemExists = cart.findIndex(item => item.id === product.id)
-    if (itemExists >= 0) {
-      const updatedCart = [...cart]
-      updatedCart[itemExists] = { ...updatedCart[itemExists] }
-      setCart(updatedCart)
-    } else {
-      setCart([...cart, product])
-    }
-    console.log('Producto agregado:', product.name)
-  }
+  // Aplica filtro de categoría sobre el resultado de búsqueda
+  const filteredByCategory = category === 'todos'
+    ? filtered
+    : filtered.filter(p => p.category === category)
 
   return (
     <>
-      <AppNavbar />
+  <AppNavbar 
+    setCategory={setCategory}
+    itemCount={itemCount}
+    cart={cart}
+    increaseQuantity={increaseQuantity}
+    decreaseQuantity={decreaseQuantity}
+    removeFromCart={removeFromCart}
+    clearCart={clearCart}
+    cartTotal={cartTotal}
+  />
       <Carrusel />
       
       {/* Grid de productos */}
       <div className="container my-5">
         <h2 className="mb-4 text-center">En tendencia</h2>
         <div className="row row-cols-1 row-cols-md-4 g-4">
-          {filtered.map(product => (
+          {filteredByCategory.map(product => (
             <ProductCard 
               key={product.id} 
               product={product} 
