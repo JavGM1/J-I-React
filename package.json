@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "j-i-react-monorepo",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "install:frontend": "npm --prefix frontend install"
+  },
+  "devDependencies": {
+    "@types/node": "^24.8.1"
+  }
+}
