@@ -40,14 +40,11 @@ El proyecto usa Jest + ts-jest y Testing Library para las pruebas unitarias. La 
 
 Contribuciones
 --------------
-- Abre un issue para discutir cambios grandes.
-- Crea un fork y luego un pull request para proponer cambios.
-- Asegúrate de ejecutar `npm test` antes de enviar un PR y agrega pruebas cuando corresponda.
+- Inigo1gomez
 
 Licencia
 --------
-Indica aquí la licencia del proyecto (por ejemplo, MIT) si aplica.
-
+(ninguna)
 Contacto
 -------
 Para dudas o consultas, crea un issue en GitHub o contacta al mantenedor del repositorio.
