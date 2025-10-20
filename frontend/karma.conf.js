@@ -1,4 +1,5 @@
 module.exports = function(config) {
+  const path = require('path');
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
@@ -15,9 +16,33 @@ module.exports = function(config) {
       resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
       module: {
         rules: [
-          { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+          // Use ts-loader with the test-specific tsconfig for spec files
+          {
+            test: /\.tsx?$/,
+            use: {
+              loader: 'ts-loader',
+              options: {
+                // Point to the spec-specific tsconfig so tests compile with jasmine types
+                configFile: 'tsconfig.spec.json',
+                // Use transpileOnly for faster test builds; keep type checking lighter during test runs
+                transpileOnly: true
+              }
+            },
+            exclude: /node_modules/
+          },
           { test: /\.css$/, use: ['style-loader','css-loader'] },
-      { test: /\.(png|jpg|svg|webp)$/, type: 'asset/resource' }
+          { test: /\.(png|jpg|svg|webp)$/, type: 'asset/resource' },
+          // Post-loader: instrument source files for coverage (exclude tests)
+          {
+            enforce: 'post',
+            test: /\.tsx?$/,
+            include: [path.resolve(__dirname, 'src')],
+            exclude: [/\.spec\.tsx?$/, /node_modules/],
+            use: {
+              loader: 'istanbul-instrumenter-loader',
+              options: { esModules: true }
+            }
+          }
         ]
       },
       devtool: 'inline-source-map'

@@ -4,7 +4,8 @@
     "strict": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "types": ["jasmine"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["jasmine", "node"],
     "skipLibCheck": true
   },
   "files": [],

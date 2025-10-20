@@ -5,11 +5,19 @@ import Carrusel from './Carrusel';
 describe('Carrusel', () => {
   beforeAll(() => {
     // Evitar que el navegador realice peticiones al asignar src en tests
-    Object.defineProperty(global.Image.prototype, 'src', {
-      set() {
-        /* noop durante tests para evitar 404 */
+    // Use a TypeScript-safe access via globalThis and HTMLImageElement prototype
+    try {
+      const proto = (globalThis as any).HTMLImageElement?.prototype;
+      if (proto) {
+        Object.defineProperty(proto, 'src', {
+          set() {
+            /* noop durante tests para evitar 404 */
+          }
+        });
       }
-    });
+    } catch (e) {
+      // Silently ignore in environments where HTMLImageElement is not configurable
+    }
   });
 
   it('renderiza imágenes del carrusel', () => {
