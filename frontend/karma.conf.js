@@ -1,5 +1,4 @@
 module.exports = function(config) {
-  const path = require('path');
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
@@ -31,18 +30,7 @@ module.exports = function(config) {
             exclude: /node_modules/
           },
           { test: /\.css$/, use: ['style-loader','css-loader'] },
-          { test: /\.(png|jpg|svg|webp)$/, type: 'asset/resource' },
-          // Post-loader: instrument source files for coverage (exclude tests)
-          {
-            enforce: 'post',
-            test: /\.tsx?$/,
-            include: [path.resolve(__dirname, 'src')],
-            exclude: [/\.spec\.tsx?$/, /node_modules/],
-            use: {
-              loader: 'istanbul-instrumenter-loader',
-              options: { esModules: true }
-            }
-          }
+          { test: /\.(png|jpg|svg|webp)$/, type: 'asset/resource' }
         ]
       },
       devtool: 'inline-source-map'
