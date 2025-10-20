@@ -8,7 +8,9 @@
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "install:frontend": "npm --prefix frontend install"
+    "install:frontend": "npm --prefix frontend install",
+    "test": "karma start --single-run",
+    "test:watch": "karma start"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.0",
@@ -30,5 +32,47 @@
   "dependencies": {
     "bootstrap": "^5.3.8",
     "react-bootstrap": "^2.10.10"
-  }
+  },
+  "module": {
+    "rules": [
+      {
+        "test": "/\\.tsx?$/",
+        "use": "ts-loader",
+        "exclude": "/node_modules/"
+      },
+      {
+        "test": "/\\.css$/",
+        "use": [
+          "style-loader",
+          "css-loader"
+        ]
+      },
+      {
+        "test": "/\\.(png|jpg|svg)$/",
+        "type": "asset/resource"
+      }
+    ]
+  },
+  "resolve": {
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx"
+    ]
+  },
+  "devtool": "inline-source-map",
+  "reporters": [
+    "progress",
+    "coverage"
+  ],
+  "coverageReporter": {
+    "type": "html",
+    "dir": "coverage/"
+  },
+  "browsers": [
+    "ChromeHeadless"
+  ],
+  "singleRun": true,
+  "concurrency": "Infinity"
 }
