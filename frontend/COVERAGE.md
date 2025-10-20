@@ -38,7 +38,7 @@ Cómo reproducir el reporte localmente
 2. Ejecutar:
 ```powershell
 npm install
-npx jest --coverage --coverageDirectory=coverage
+npx jest --coverage --coverageReporters=text-summary --coverageDirectory=coverage
 ```
 3. Verás un resumen en consola (text-summary) y el reporte HTML en `frontend/coverage/lcov-report/index.html`.
 
