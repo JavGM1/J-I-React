@@ -1,4 +1,4 @@
-// React import not required here (JSX handled by tsconfig)
+// Import de React no requerido aquí (JSX gestionado por tsconfig)
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useCart } from '../useCart';
 
@@ -20,11 +20,11 @@ function CartTestComponent() {
 
 describe('useCart (component pattern)', () => {
   beforeEach(() => {
-    // ensure localStorage starts empty
+    // asegurar que localStorage comienza vacío
     localStorage.clear();
   });
 
-  it('adds an item and updates counts and total', () => {
+  it('agrega un ítem y actualiza conteos y total', () => {
     render(<CartTestComponent />);
 
     expect(screen.getByTestId('count').textContent).toBe('0');
@@ -33,16 +33,16 @@ describe('useCart (component pattern)', () => {
     expect(screen.getByTestId('items').textContent).toBe('1');
     expect(screen.getByTestId('total').textContent).toBe('100');
 
-    // increase quantity
+  // incrementar cantidad
     fireEvent.click(screen.getByText('inc'));
     expect(screen.getByTestId('items').textContent).toBe('2');
     expect(screen.getByTestId('total').textContent).toBe('200');
 
-    // decrease quantity
+  // decrementar cantidad
     fireEvent.click(screen.getByText('dec'));
     expect(screen.getByTestId('items').textContent).toBe('1');
 
-    // remove
+  // eliminar
     fireEvent.click(screen.getByText('remove'));
     expect(screen.getByTestId('count').textContent).toBe('0');
   });

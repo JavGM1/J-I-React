@@ -16,7 +16,7 @@ describe('ProductCard', () => {
     }
   } as any;
 
-  it('renders product info and triggers addToCart', () => {
+  it('renderiza la información del producto y dispara addToCart', () => {
     const addToCart = jest.fn();
     render(<ProductCard product={product} addToCart={addToCart} />);
 
@@ -24,9 +24,9 @@ describe('ProductCard', () => {
     expect(screen.getByText(/120/)).toBeInTheDocument();
 
     const verDetalles = screen.getByText(/ver detalles/i);
-    fireEvent.click(verDetalles);
-    // modal should show description
-    expect(screen.getByText(/Material:/i)).toBeInTheDocument();
+  fireEvent.click(verDetalles);
+  // El modal debe mostrar información del producto
+  expect(screen.getByText(/Material:/i)).toBeInTheDocument();
 
     const agregarBtn = screen.getByTitle(/Agregar al carrito/i);
     fireEvent.click(agregarBtn);

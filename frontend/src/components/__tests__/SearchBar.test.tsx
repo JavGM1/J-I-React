@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import SearchBar from '../SearchBar';
 
-describe('SearchBar', () => {
-  it('calls onSearch on change and on submit', () => {
+describe('Barra de búsqueda (SearchBar)', () => {
+  it('llama a onSearch al cambiar y al enviar', () => {
   const onSearch = jest.fn();
     render(<SearchBar onSearch={onSearch} placeholder="Buscar..." />);
 
@@ -10,9 +10,9 @@ describe('SearchBar', () => {
     fireEvent.change(input, { target: { value: 'mesa' } });
     expect(onSearch).toHaveBeenCalledWith('mesa');
 
-    // Submit the form
-    fireEvent.submit(input.closest('form')!);
-    // should have been called at least twice (change + submit)
-    expect(onSearch).toHaveBeenCalledTimes(2);
+  // Enviar el formulario
+  fireEvent.submit(input.closest('form')!);
+  // Debió haberse llamado al menos dos veces (change + submit)
+  expect(onSearch).toHaveBeenCalledTimes(2);
   });
 });

@@ -1,4 +1,4 @@
-// React import not required here (JSX handled by tsconfig)
+// Import de React no requerido aquí (JSX gestionado por tsconfig)
 import { render, screen } from '@testing-library/react';
 import { act } from 'react';
 import { useProductSearch } from '../useProductSearch';
@@ -15,16 +15,16 @@ function TestSearch({ products }: { products: any[] }) {
 }
 
 describe('useProductSearch (component pattern)', () => {
-  it('updates when window app:search event is dispatched', () => {
+  it('se actualiza cuando se despacha el evento app:search en window', () => {
     render(<TestSearch products={db} />);
-    // initial should show all products
+    // inicialmente debe mostrar todos los productos
     expect(screen.getByTestId('count').textContent).toBe(String(db.length));
 
-    // dispatch a search event wrapped in act so React updates are flushed
+    // despachar un evento de búsqueda envuelto en act para que React procese la actualización
     act(() => {
       window.dispatchEvent(new CustomEvent('app:search', { detail: 'sofá' }));
     });
-    // after dispatch, the hook should update query/filter
+    // después del dispatch, el hook debe actualizar query/filtered
     expect(screen.getByTestId('query').textContent?.toLowerCase()).toContain('sofá');
   });
 });

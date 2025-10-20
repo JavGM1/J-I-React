@@ -1,7 +1,7 @@
-// Jest setup: extend expect or add globals if needed
+// Configuración de Jest: extender expect o añadir globals si es necesario
 import '@testing-library/jest-dom';
 
-// Silence console logs during tests unless explicitly needed
+// Silenciar console.log durante los tests salvo que se necesite explícitamente
 if (typeof jest !== 'undefined') {
   beforeAll(() => {
     jest.spyOn(console, 'log').mockImplementation(() => {});
