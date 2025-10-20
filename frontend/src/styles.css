@@ -10,9 +10,8 @@
   border-radius: 12px;
   background: #f8f8f8;
 }
-/* -------------------------------
-   Global
-   ------------------------------- */
+
+
 html, body { height: 100%; }
 
 body {
@@ -61,19 +60,19 @@ main { padding: 1rem; }
   color: #198754; /* color hover icono (Bootstrap success) */
 }
 .navbar .btn-person {
-  background-color: #f8f8f8; /* fondo normal */
+  background-color: #f8f8f8; /* Foondo */
   border: 1px solid #cbb79a;
 }
 .navbar .btn-person:hover {
-  background-color: #cbb79a; /* fondo hover */
+  background-color: #cbb79a; /* Fondo hover */
   border-color: #000000;
 }
 .navbar .btn-cart {
-  background-color: #f8f8f8; /* fondo normal */
+  background-color: #f8f8f8; /* Fondo */
   border: 1px solid #d8c7b6;
 }
 .navbar .btn-cart:hover {
-  background-color: #198754; /* fondo hover */
+  background-color: #198754; /* Fondo hover */
   border-color: #198754;
 }
 .navbar .dropdown-item, 
@@ -85,7 +84,7 @@ main { padding: 1rem; }
   display: flex; 
   align-items: center;
   position: relative;
-  z-index: 2200; /* ensure nav links are above search input */
+  z-index: 2200; 
 }
 
 .navbar .navbar-brand { 
@@ -94,8 +93,8 @@ main { padding: 1rem; }
 }
 
 /* -------------------------------
-   SearchBar
-   ------------------------------- */
+  Barra de búsqueda
+  ------------------------------- */
 .search-input {
   min-width: 180px;
   border-radius: 6px;
@@ -119,7 +118,7 @@ main { padding: 1rem; }
   border-color: #e7d0c5;
 }
 
-/* Desktop: centrar SearchBar */
+/* Escritorio: centrar la barra de búsqueda */
 @media (min-width: 992px) {
   .d-none.d-lg-flex.align-items-center {
     justify-content: center;
@@ -151,7 +150,7 @@ main { padding: 1rem; }
   }
 }
 
-/* Mobile: SearchBar ocupa 100% */
+/* Móvil: la barra de búsqueda ocupa 100% */
 @media (max-width: 991px) {
   .d-lg-none .search-input {
     width: 100%;
@@ -162,9 +161,7 @@ main { padding: 1rem; }
   }
 }
 
-/* -------------------------------
-   Carousel
-   ------------------------------- */
+
 .custom-carousel {
   position: relative;
   width: 100%;
@@ -217,8 +214,8 @@ main { padding: 1rem; }
 }
 
 /* -------------------------------
-   Product Cards
-   ------------------------------- */
+  Tarjetas de producto
+  ------------------------------- */
 .mueble-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -253,8 +250,8 @@ main { padding: 1rem; }
 }
 
 /* -------------------------------
-   Footer
-   ------------------------------- */
+  Pie de página
+  ------------------------------- */
 .site-footer {
   background-color: #d8c7b6;
   color: #222;
