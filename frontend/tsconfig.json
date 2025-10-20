@@ -5,7 +5,7 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["jasmine", "node"],
+    "types": ["node"],
     "skipLibCheck": true
   },
   "files": [],
