@@ -291,5 +291,33 @@ main { padding: 1rem; }
   border-color: #e7d0c5;
 }
 
+/* suaviza entrada/salida del diálogo (usa transform + opacity) */
+.modal.fade .modal-dialog {
+  transform: translate3d(0, -24px, 0); /* empieza ligeramente arriba */
+  opacity: 0;
+  transition: transform 280ms cubic-bezier(.22,.9,.32,1), opacity 220ms ease-out;
+  will-change: transform, opacity;
+}
+
+.modal.show .modal-dialog {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+/* suaviza el backdrop */
+.modal-backdrop.fade {
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5; /* ajusta opacidad según tu preferencia */
+}
+
+/* opcional: reduce jitter en iOS/Android WebView */
+.modal .modal-content {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
 
