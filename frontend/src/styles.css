@@ -1,131 +1,172 @@
-.modal-img-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 320px;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4/3;
-  object-fit: contain;
-  border-radius: 12px;
-  background: #f8f8f8;
+/* -------------------------------
+   Reset y Global
+------------------------------- */
+html,
+body {
+  height: 100%;
 }
-
-
-html, body { height: 100%; }
-
 body {
   margin: 0;
   min-height: 100vh;
   padding-top: 80px; /* compensate fixed navbar */
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial;
 }
-
-main { padding: 1rem; }
+main {
+  padding: 1rem;
+}
 
 /* -------------------------------
    Navbar
-   ------------------------------- */
-.navbar { 
-  min-height: 80px; 
+------------------------------- */
+.navbar {
+  min-height: 80px;
   z-index: 2000;
 }
-
-.navbar.bg-body-tertiary { 
-  background-color: #d8c7b6 !important; 
+.navbar.bg-body-tertiary {
+  background-color: #d8c7b6 !important;
 }
-
-.navbar .container { 
-  max-width: 100% !important; 
-  padding-left: 1rem; 
-  padding-right: 1rem; 
+.navbar .container {
+  max-width: 100% !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
-
 .navbar .container,
-.navbar .navbar-collapse { 
-  justify-content: flex-start !important; 
+.navbar .navbar-collapse {
+  justify-content: flex-start !important;
 }
-
-.navbar .navbar-nav { 
-  justify-content: flex-start !important; 
-  color: #cbb79a; /* color normal icono */
+.navbar .navbar-nav {
+  justify-content: flex-start !important;
+  color: #cbb79a;
   transition: color 0.2s;
-  text-align: left; 
+  text-align: left;
 }
-.navbar .nav-link, 
+.navbar .nav-link,
 .navbar .icon-person:hover {
-  color: #000000; /* color hover icono (azul éxito) */
+  color: #000000;
 }
 .navbar .icon-cart:hover {
-  color: #198754; /* color hover icono (Bootstrap success) */
+  color: #198754;
 }
 .navbar .btn-person {
-  background-color: #f8f8f8; /* Foondo */
+  background-color: #f8f8f8;
   border: 1px solid #cbb79a;
 }
 .navbar .btn-person:hover {
-  background-color: #cbb79a; /* Fondo hover */
+  background-color: #cbb79a;
   border-color: #000000;
 }
 .navbar .btn-cart {
-  background-color: #f8f8f8; /* Fondo */
+  background-color: #f8f8f8;
   border: 1px solid #d8c7b6;
 }
 .navbar .btn-cart:hover {
-  background-color: #198754; /* Fondo hover */
+  background-color: #198754;
   border-color: #198754;
 }
-.navbar .dropdown-item, 
-.navbar .dropdown-menu { 
-  text-align: left; 
+.navbar .dropdown-item,
+.navbar .dropdown-menu {
+  text-align: left;
 }
-
-.navbar .nav-link { 
-  display: flex; 
+.navbar .nav-link {
+  display: flex;
   align-items: center;
   position: relative;
-  z-index: 2200; 
+  z-index: 2200;
+  color: #857967;
+  transition: color 180ms ease;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: #000000;
+}
+.navbar .navbar-brand {
+  margin-right: 1rem;
+  padding-left: 2rem;
+}
+.navbar-flex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.navbar-nav-left {
+  flex: 0 1 auto;
+}
+.navbar-search {
+  flex: 1 1 400px;
+  max-width: 500px;
+  min-width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar-icons {
+  flex: 0 1 auto;
+  margin-left: auto;
+}
+.navbar-icons > * {
+  margin-left: 0.5rem;
+}
+.navbar .icon-person,
+.navbar .icon-cart {
+  color: #fff;
+  transition: color 0.2s;
+}
+.navbar .btn-person,
+.navbar .btn-cart {
+  background-color: #c6b29a;
+  border: 1px solid #c6b29a;
+}
+.navbar .btn-person:hover,
+.navbar .btn-cart:hover {
+  background-color: #e7d0c5;
+  border-color: #e7d0c5;
 }
 
-.navbar .navbar-brand { 
-  margin-right: 1rem; 
-  padding-left: 2rem; 
+/* Íconos de usuario y carrito: solo visibles en móvil */
+@media (min-width: 992px) {
+  .navbar-mobile-icons {
+    display: none !important;
+  }
+}
+/* Íconos de usuario y carrito: solo visibles en desktop */
+@media (max-width: 991.98px) {
+  .navbar-icons {
+    display: none !important;
+  }
+  .navbar-search {
+    display: none !important;
+  }
 }
 
 /* -------------------------------
-  Barra de búsqueda
-  ------------------------------- */
+   Barra de búsqueda
+------------------------------- */
 .search-input {
   min-width: 180px;
   border-radius: 6px;
   justify-self: center;
 }
-
 .search-button {
   border-radius: 6px;
   padding: 0.35rem 0.9rem;
 }
-
 .search-button.btn-outline-success {
   color: #ffffff;
   border-color: #c6b29a;
   background-color: #c6b29a;
 }
-
 .search-button.btn-outline-success:hover {
   color: #000;
   background-color: #e7d0c5;
   border-color: #e7d0c5;
 }
-
-/* Escritorio: centrar la barra de búsqueda */
 @media (min-width: 992px) {
   .d-none.d-lg-flex.align-items-center {
     justify-content: center;
     width: 100%;
     margin-left: -200px;
   }
-
   .d-none.d-lg-flex .search-input {
     width: clamp(280px, 35vw, 640px);
     min-width: 280px;
@@ -134,12 +175,10 @@ main { padding: 1rem; }
     padding: 0.45rem 0.75rem;
     box-sizing: border-box;
   }
-
   .d-none.d-lg-flex .search-button {
     padding: 0.45rem 1rem;
     font-size: 0.95rem;
   }
-
   .search-input,
   .search-button {
     transform: none !important;
@@ -149,8 +188,6 @@ main { padding: 1rem; }
     margin-left: 0;
   }
 }
-
-/* Móvil: la barra de búsqueda ocupa 100% */
 @media (max-width: 991px) {
   .d-lg-none .search-input {
     width: 100%;
@@ -161,7 +198,9 @@ main { padding: 1rem; }
   }
 }
 
-
+/* -------------------------------
+   Carrusel
+------------------------------- */
 .custom-carousel {
   position: relative;
   width: 100%;
@@ -173,24 +212,20 @@ main { padding: 1rem; }
   overflow: hidden;
   border-radius: 18px;
 }
-
 @media (min-width: 768px) {
   .custom-carousel {
     height: 420px;
   }
 }
-
 @media (max-width: 991px) {
   .custom-carousel {
     margin: 2px auto;
   }
 }
-
 .custom-carousel .carousel-inner,
 .custom-carousel .carousel-item {
   height: 100%;
 }
-
 .imgCarousel {
   width: 100%;
   height: 100%;
@@ -199,49 +234,53 @@ main { padding: 1rem; }
   margin: 0;
   border-radius: 0;
 }
-
 .custom-carousel .imgCarousel {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-
 .custom-carousel .carousel-control-prev {
   left: 0;
 }
-
 .custom-carousel .carousel-control-next {
   right: 0;
 }
+/* Carrusel: animación de aparición/desaparición de controles */
+.custom-carousel .carousel-control-prev,
+.custom-carousel .carousel-control-next,
+.custom-carousel .carousel-indicators {
+  transition: opacity 0.4s;
+}
+.custom-carousel:not(:hover):not(:focus) .carousel-control-prev,
+.custom-carousel:not(:hover):not(:focus) .carousel-control-next,
+.custom-carousel:not(:hover):not(:focus) .carousel-indicators {
+  opacity: 0;
+  pointer-events: none;
+}
 
 /* -------------------------------
-  Tarjetas de producto
-  ------------------------------- */
+   Tarjetas de producto
+------------------------------- */
 .mueble-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .mueble-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .mueble-card .btn-outline-primary {
-  color: #CBB79A;
-  border-color: #CBB79A;
+  color: #cbb79a;
+  border-color: #cbb79a;
 }
-
 .mueble-card .btn-outline-primary:hover,
 .mueble-card .btn-outline-primary:focus {
-  background-color: #CBB79A;
-  border-color: #CBB79A;
+  background-color: #cbb79a;
+  border-color: #cbb79a;
   color: #fff;
 }
-
 .mueble-img {
   width: 100%;
   height: auto;
 }
-
 .precio-mueble {
   font-size: 1.25rem;
   font-weight: bold;
@@ -250,8 +289,8 @@ main { padding: 1rem; }
 }
 
 /* -------------------------------
-  Pie de página
-  ------------------------------- */
+   Pie de página
+------------------------------- */
 .site-footer {
   background-color: #d8c7b6;
   color: #222;
@@ -273,69 +312,40 @@ main { padding: 1rem; }
   color: #fff;
 }
 
-.navbar .icon-person,
-.navbar .icon-cart {
-  color: #fff;
-  transition: color 0.2s;
+/* -------------------------------
+   Modales
+------------------------------- */
+.modal-img-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #f8f8f8;
 }
-
-.navbar .btn-person,
-.navbar .btn-cart {
-  background-color: #c6b29a;
-  border: 1px solid #c6b29a;
-
-}
-.navbar .btn-person:hover,
-.navbar .btn-cart:hover {
-  background-color: #e7d0c5;
-  border-color: #e7d0c5;
-}
-
-/* suaviza entrada/salida del diálogo (usa transform + opacity) */
 .modal.fade .modal-dialog {
-  transform: translate3d(0, -24px, 0); /* empieza ligeramente arriba */
+  transform: translate3d(0, -24px, 0);
   opacity: 0;
-  transition: transform 280ms cubic-bezier(.22,.9,.32,1), opacity 220ms ease-out;
+  transition: transform 280ms cubic-bezier(0.22, 0.9, 0.32, 1),
+    opacity 220ms ease-out;
   will-change: transform, opacity;
 }
-
 .modal.show .modal-dialog {
   transform: translate3d(0, 0, 0);
   opacity: 1;
 }
-
-/* suaviza el backdrop */
 .modal-backdrop.fade {
   opacity: 0;
   transition: opacity 260ms ease-out;
 }
-
 .modal-backdrop.show {
-  opacity: 0.5; /* ajusta opacidad según tu preferencia */
+  opacity: 0.5;
 }
-
-/* opcional: reduce jitter en iOS/Android WebView */
 .modal .modal-content {
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
-.navbar .nav-link {
-  color: #857967; /* tono tenue por defecto */
-  transition: color 180ms ease;
-}
-
-.navbar .nav-link:hover,
-.navbar .nav-link:focus {
-  color: #000000; /* negro al pasar el ratón / foco */
-}
-
-/* conservar comportamiento de los iconos (hover) */
-.navbar .icon-person:hover {
-  color: #000000;
-}
-
-.navbar .icon-cart:hover {
-  color: #198754;
-}
-

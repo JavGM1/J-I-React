@@ -86,34 +86,66 @@ export default function AppNavbar({ setCategory, itemCount = 0, cart = [], incre
         <Navbar.Brand href="#home">J&I Muebles</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Inicio</Nav.Link>
-            <Nav.Link href="#catalogo">Catálogo</Nav.Link>
-            <NavDropdown title="Muebles" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('living'); }}>
-                Living
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('oficina'); }}>
-                Oficina
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('baño'); }}>
-                Baño
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('todos'); }}>
-                Catálogo completo
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="#contacto" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>
-              ¡Contáctanos!
-            </Nav.Link>
-          </Nav>
+          <div className="navbar-flex w-100 d-flex align-items-center">
+            <Nav className="navbar-nav-left">
+              <Nav.Link href="#home">Inicio</Nav.Link>
+              <Nav.Link href="#catalogo">Catálogo</Nav.Link>
+              <NavDropdown title="Muebles" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('living'); }}>
+                  Living
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('oficina'); }}>
+                  Oficina
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('baño'); }}>
+                  Baño
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); setCategory && setCategory('todos'); }}>
+                  Catálogo completo
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="#contacto" onClick={(e) => { e.preventDefault(); setShowContact(true); }}>
+                ¡Contáctanos!
+              </Nav.Link>
+            </Nav>
+            <div className="navbar-search mx-auto">
+              <SearchBar onSearch={(q: string) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
+            </div>
+            <div className="navbar-icons d-flex align-items-center ms-auto">
+              <Dropdown>
+                <Dropdown.Toggle variant="primary" id="loginDropdown" className="btn-person">
+                  <Person size={22} className="icon-person" />
+                </Dropdown.Toggle>
+                <Dropdown.Menu align="end">
+                  <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }}>
+                    Iniciar sesión
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>
+                    Registrar
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#">
+                    Mi cuenta
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Button variant="outline-secondary" className="btn-cart position-relative ms-2" onClick={() => setShowCart(true)}>
+                <Cart size={22} className="icon-cart" />
+                {itemCount > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {itemCount}
+                    <span className="visually-hidden">items en carrito</span>
+                  </span>
+                )}
+              </Button>
+            </div>
+          </div>
           {/* Buscador móvil dentro del collapse */}
           <div className="d-lg-none my-2">
             <SearchBar onSearch={(q: string) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} className="w-100" />
           </div>
           {/* Botones móvil: login y carrito */}
-          <div className="d-lg-none d-flex justify-content-end gap-2 my-2">
+          <div className="navbar-mobile-icons d-lg-none d-flex justify-content-end gap-2 my-2">
             <Dropdown>
               <Dropdown.Toggle variant="primary" id="loginDropdownMobile" className="btn-person">
                 <Person size={22} className="icon-person" />
@@ -140,38 +172,7 @@ export default function AppNavbar({ setCategory, itemCount = 0, cart = [], incre
               )}
             </Button>
           </div>
-          {/* Buscador en escritorio fuera del collapse */}
         </Navbar.Collapse>
-        <div className="d-none d-lg-flex align-items-center ms-auto">
-          <div className="search-wrapper me-2">
-            <SearchBar onSearch={(q: string) => window.dispatchEvent(new CustomEvent('app:search', { detail: q }))} />
-          </div>
-          <Dropdown>
-            <Dropdown.Toggle variant="primary" id="loginDropdown" className="btn-person">
-              <Person size={22} className="icon-person" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu align="end">
-              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }}>
-                Iniciar sesión
-              </Dropdown.Item>
-              <Dropdown.Item href="#" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>
-                Registrar
-              </Dropdown.Item>
-              <Dropdown.Item href="#">
-                Mi cuenta
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Button variant="outline-secondary" className="ms-2 btn-cart position-relative" onClick={() => setShowCart(true)}>
-            <Cart size={22} className="icon-cart" />
-            {itemCount > 0 && (
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {itemCount}
-                <span className="visually-hidden">items en carrito</span>
-              </span>
-            )}
-          </Button>
-        </div>
       </Container>
       
 
