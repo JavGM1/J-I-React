@@ -320,4 +320,22 @@ main { padding: 1rem; }
   -webkit-font-smoothing: antialiased;
 }
 
+.navbar .nav-link {
+  color: #857967; /* tono tenue por defecto */
+  transition: color 180ms ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: #000000; /* negro al pasar el ratón / foco */
+}
+
+/* conservar comportamiento de los iconos (hover) */
+.navbar .icon-person:hover {
+  color: #000000;
+}
+
+.navbar .icon-cart:hover {
+  color: #198754;
+}
 

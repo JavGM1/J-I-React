@@ -32,7 +32,10 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
             </Card.Text>
             <Button
               variant="outline-primary"
-              onClick={() => setShowModal(true)}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                setShowModal(true);
+                (e.currentTarget as HTMLButtonElement).blur();
+              }}
               className="me-2"
             >
               Ver detalles
